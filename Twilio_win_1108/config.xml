@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<Table>
+  <button>
+    <name>btnSubmit1</name>
+    <text>Order is Ready</text>
+    <msg>Hi [Name], your order: [Order#] is ready</msg>
+  </button>
+  <button>
+    <name>btnSubmit2</name>
+    <text>Order has issues</text>
+    <msg>Hi [Name], Please pick up your product</msg>
+  </button> 
+  <button>
+    <name>btnSubmit3</name>
+    <text>Order 3</text>
+    <msg>Hi [Name], Message </msg>
+  </button>
+  <button>
+    <name>btnSubmit4</name>
+    <text>text 4</text>
+    <msg>Hi [Name], Message 4</msg>
+  </button>
+  <button>
+    <name>btnSubmit5</name>
+    <text>text 5</text>
+    <msg>Hi [Name], Message 5</msg>
+  </button>
+  <Table_Admin>
+    <accountID>AC7741c5772d721eda51064d804ff22444</accountID>
+    <authToken>f403e41cabbbcee9acc3344af79d2d8c</authToken>
+    <TwilioNumber>6475592196</TwilioNumber>
+    <AgentNumber>(416)797-8295</AgentNumber>
+  </Table_Admin>
+</Table>
+

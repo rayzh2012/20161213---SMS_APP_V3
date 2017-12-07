@@ -1,0 +1,385 @@
+<html>
+<head>
+<script type="text/javascript">
+
+    var xmlhttp;
+    var result;
+    var url = "http://74.205.174.118/hermes_net_v5/admin/DataManager/Web_Service/CallFileUtilities.asmx";
+
+
+
+    var mediaType;
+    var indice;
+    var companyid;
+    var campaignID;
+    var parameterString;
+    var login = 'jfougere';
+    var password = 'adcbfdb184fbedc2209d1c088708eeb52d1a075d';//correct
+ //   var password = 'adcbfdb184fbedc2209d1c088708eeb52d1a075daa';//wrong
+    var taskno;
+    var WSprogressResult;
+    var WSloginResult;
+ 
+   function WSLogin (login,password){
+		xmlhttp = null;
+		//xmlhttp = new XMLHttpRequest();
+		xmlhttp = createCORSRequest("POST",url);
+		
+		if (xmlhttp!=null){
+			
+
+			var envelope = '<?xml version="1.0" encoding="utf-8"?>\
+							<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
+							  <soap:Body>\
+								<Login xmlns="http://vocalcom.com/CallFileUtilities/">\
+								  <login>' + login + '</login>\
+								  <sha1Password>' + password + '</sha1Password>\
+								</Login>\
+							  </soap:Body>\
+							</soap:Envelope>';
+		//alert(envelope);
+			xmlhttp.onreadystatechange = state_change_login;
+			xmlhttp.open("POST",url,false);
+			xmlhttp.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
+			xmlhttp.setRequestHeader("Content-Length", envelope.length);
+			xmlhttp.setRequestHeader("SOAPAction", "http://vocalcom.com/CallFileUtilities/Login");
+			
+			xmlhttp.send(envelope);
+			envelope = null;
+			
+			//Add logic here to output SuccessFul login or error..
+		}
+		else{
+			alert("Votre navigateur ne supporte pas XMLHTTP1.");
+		}
+}
+
+
+    function createCORSRequest(method, url) {
+        var xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {// XHR for Chrome/Firefox/Opera/Safari.
+            xhr.open(method, url, true);
+        } else if (typeof XDomainRequest != "undefined") {// XDomainRequest for IE.
+            xhr = new XDomainRequest();
+            xhr.open(method, url);
+        } else {// CORS not supported.      
+            xhr = null;
+        }
+        return xhr;
+    }
+
+
+    function AddClients(url){
+
+        try {
+            xmlhttp = null;
+            //xmlhttp = new XMLHttpRequest();
+            xmlhttp = createCORSRequest("POST",url);
+            //alert(xmlhttp);
+            if (xmlhttp!=null){
+			
+
+                var envelope = '<?xml version="1.0" encoding="utf-8"?>\
+							<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
+							  <soap:Body>\
+								<AddClients xmlns="http://vocalcom.com/CallFileUtilities/">\
+								  <customerId>1</customerId>\
+								  <campaignId>F4E63674974495B4</campaignId>\
+								  <fields>\
+									  <string>fldRecordID</string>\
+									  <string>fldCategoryID</string>\
+									  <string>fldPhoneNumber</string>\
+									  <string>fldTitle</string>\
+									  <string>fldFirstName</string>\
+									  <string>fldLastName</string>\
+									  <string>fldStreetAddress</string>\
+									  <string>fldCity</string>\
+									  <string>fldPostalCode</string>\
+									  <string>fldProvinceCode</string>\
+									  <string>fldSubCategoryCode</string>\
+									  <string>fldLanguageCode</string>\
+									  <string>fldSpare1</string>\
+									  <string>fldSpare2</string>\
+									  <string>fldSpare3</string>\
+									  <string>fldFiller1</string>\
+									  <string>fldFiller2</string>\
+									  <string>fldFiller3</string>\
+									  <string>fldInActiveReason</string>\
+									  <string>fldIsInActive</string>\
+									  <string>fldListName</string>\
+									  <string>fldMaxAttemptCounter</string>\
+									  <string>fldMaxContactCounter</string>\
+								  </fields>\
+								  <values>\
+									<ArrayOfAnyType>\
+										<anyType>Cxt016</anyType>\
+										<anyType>Cat001</anyType>\
+										<anyType>9028776737</anyType>\
+										<anyType>MR</anyType>\
+										<anyType>Hang</anyType>\
+										<anyType>TEST</anyType>\
+										<anyType>123 MAIN ST</anyType>\
+										<anyType>HALIFAX</anyType>\
+										<anyType>B2B 1B1</anyType>\
+										<anyType>NS</anyType>\
+										<anyType>SubCat999</anyType>\
+										<anyType>EN</anyType>\
+										<anyType>Spare1</anyType>\
+										<anyType>Spare2</anyType>\
+										<anyType>Spare3</anyType>\
+										<anyType>fldFiller1</anyType>\
+										<anyType>fldFiller2</anyType>\
+										<anyType>fldFiller3</anyType>\
+										<anyType>Active</anyType>\
+										<anyType>0</anyType>\
+										<anyType>ListName</anyType>\
+										<anyType>0</anyType>\
+										<anyType>0</anyType>\
+									</ArrayOfAnyType>\
+								 </values>\
+								  <addToCallFile>true</addToCallFile>\
+								  <phoneFields>\
+									<string>fldPhoneNumber</string>\
+								  </phoneFields>\
+								  <memoField>fldCity</memoField>\
+								  <excludeCalls>0</excludeCalls>\
+								  <excludeReason>test</excludeReason>\
+								  <order>99</order>\
+								  <agentCode>9998</agentCode>\
+								  <callbackHour>2016-10-17T13:00:00</callbackHour>\
+								</AddClients>\
+							  </soap:Body>\
+							</soap:Envelope>';	
+                //alert(envelope);	
+
+                //<string>INDICE</string>\
+                //<anyType>11</anyType>\	
+                xmlhttp.onreadystatechange = state_Change_addclient;
+                xmlhttp.onerror = function() {
+                    alert('Woops, there was an error making the request.');
+                };
+                xmlhttp.open("POST",url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
+                xmlhttp.setRequestHeader("Content-Length", envelope.length);
+                xmlhttp.setRequestHeader("SOAPAction", "http://vocalcom.com/CallFileUtilities/AddClients");
+			
+                xmlhttp.send(envelope);
+                envelope = null;
+                
+            }
+            else{
+                alert("Votre navigateur ne supporte pas XMLHTTP1.");
+            }
+        } 
+        catch(err) {
+            alert(err.message);
+        }
+    }
+    function gettaskresult(taskno){        
+        try {
+            xmlhttp = null;
+            //xmlhttp = new XMLHttpRequest();
+            xmlhttp = createCORSRequest("POST",url);
+            //alert(xmlhttp);
+            if (xmlhttp!=null){
+                var envelope = '<?xml version="1.0" encoding="utf-8"?>\
+                    <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\
+                    <soap12:Body>\
+                        <GetTaskProgression xmlns="http://vocalcom.com/CallFileUtilities/">\
+                        <taskNumber>'+taskno+'</taskNumber>\
+                        </GetTaskProgression>\
+                    </soap12:Body>\
+                    </soap12:Envelope>';	
+                alert(envelope);	
+               xmlhttp.onreadystatechange = state_Change;
+                xmlhttp.onerror = function() {
+                    alert('Woops, there was an error making the request.');
+                };
+                xmlhttp.open("POST",url,true);
+                xmlhttp.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
+                xmlhttp.setRequestHeader("Content-Length", envelope.length);
+                xmlhttp.setRequestHeader("SOAPAction", "http://vocalcom.com/CallFileUtilities/GetTaskProgression");
+			
+                xmlhttp.send(envelope);
+                envelope = null;
+            }
+            else{
+                alert("Votre navigateur ne supporte pas XMLHTTP1.");
+            }           
+        } 
+        catch(err) {
+           // alert(err.message);
+        }
+    }
+  function state_change_login() {
+              if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                result = xmlhttp.response;  //response gives same result, responseXML give [object document]            
+             try{
+                      //login result
+                      parser = new DOMParser();
+                      xmlDoc = parser.parseFromString(result, "text/xml");
+                       WSloginResult =  xmlDoc.getElementsByTagName("LoginResult")[0].childNodes[0].nodeValue;
+                     //alert(WSloginResult);
+                     if (WSloginResult=="true")
+                     {
+                         alert("Login successfully");
+                     }
+                }
+                
+                          catch(err) {
+                              alert(err.message);
+                             }
+  }
+              }
+  }
+  
+  function state_Change_addclient(){
+      if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                result = xmlhttp.response;  //response gives same result, responseXML give [object document]   
+             //  alert(result);
+        try {
+                    //add client result
+                        parser = new DOMParser();
+                        xmlDoc = parser.parseFromString(result, "text/xml");
+                        WStaskNumber = xmlDoc.getElementsByTagName("AddClientsResult")[0].childNodes[0].nodeValue;
+                      //  alert(WStaskNumber);
+                        taskno = WStaskNumber; 
+                        if (Number(WStaskNumber)<0)
+                        {
+                            alert("Adding client unsuccessfully, your login information may be expired, you are not logged in.");
+                      
+                        }
+                }
+                catch(err) {
+                
+                    }
+             // gettaskresult(taskno);
+              try {
+                  //Task Progression success Result
+                   result = xmlhttp.response;  //response gives same result, responseXML give [object document]   
+                   alert (result);
+                        parser = new DOMParser();
+                        xmlDoc = parser.parseFromString(result, "text/xml");
+                        WSprogressResult =  xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
+                        //alert(WSprogressResult);
+                if (WSprogressResult == "CompletedOK")
+                {
+                    alert("Adding client successfully");
+                    }
+               }
+                     catch(err) {
+                              // alert(err.message);
+                            //alert ("Adding client unsuccessfully, please check with the developers.")
+                         }
+  }
+      }
+  }
+  
+    function state_Change() {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                result = xmlhttp.response;  //response gives same result, responseXML give [object document]
+                alert("response=" + result);
+             
+                try{
+                      //login result
+                      parser = new DOMParser();
+                      xmlDoc = parser.parseFromString(result, "text/xml");
+                       WSloginResult =  xmlDoc.getElementsByTagName("LoginResult")[0].childNodes[0].nodeValue;
+                     //alert(WSloginResult);
+                     if (WSloginResult=="true")
+                     {
+                         alert("Login successfully");
+                     }
+                }
+                
+                          catch(err) {
+                            //  alert(err.message);
+                             }
+                try {
+                    //add client result
+                        parser = new DOMParser();
+                        xmlDoc = parser.parseFromString(result, "text/xml");
+                        WStaskNumber = xmlDoc.getElementsByTagName("AddClientsResult")[0].childNodes[0].nodeValue;
+                        //alert(WStaskNumber);
+                        taskno = WStaskNumber; 
+                        if (Number(WStaskNumber)<0)
+                        {
+                            alert("Adding client unsuccessfully.")
+                        }
+                }
+                catch(err) {
+                
+                    }
+              try {
+                  //Task Progression success Result
+                        parser = new DOMParser();
+                        xmlDoc = parser.parseFromString(result, "text/xml");
+                        WSprogressResult =  xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
+                        //alert(WSprogressResult);
+                if (WSprogressResult == "CompletedOK")
+                {
+                    alert("Adding client successfully");
+                    }
+               }
+                     catch(err) {
+                        //       alert(err.message);
+                            //alert ("Adding client unsuccessfully, please check with the developers.")
+                         }
+            }
+            else {
+                alert("Error code: " + xmlhttp.status + " " + xmlhttp.statusText);
+            }
+        }
+    }
+        
+</script>
+</head>
+<body>
+<p>
+
+
+
+<h1>test webservice call - AddClients method</h1>
+</p>
+<!-- <b> Input Parameters</b>
+<p>
+telephonyMediaType:<input type='text' id='txtMediaType' value='TelephonyOutbound'>
+<p>
+idCompany: <input type='text' id='txtCompany' value='1'>
+<p>
+idCampaign: <input type='text' id='txtCampaign' value='F4E63674974495B4'>
+<p>
+indice: <input type='text' id='txtIndice' value='8'>
+<p>
+<p>
+<p><br><br><br> -->
+
+<p>  YOU MUST LOGIN FIRST</p>
+<b> LOGIN </b>
+<p><input type='button' value='Login' onclick='WSLogin(login,password);'>
+<p>
+<p>
+<p>
+
+
+
+<b> SOAP - ???</b>
+<p><input type='button' value='AddClients Callback_SOAP' onclick='AddClients(url);'>
+<p>
+<p>
+<p>
+    <b> TaskProgression </b>
+<p> <input type='button' value='Get Task Progression Result' onclick='gettaskresult(taskno);'>
+    <p>
+        <p>
+<!-- <b> HTTP GET </b>
+ <p><input type='button' value='AddClients_CB_HTTP_GET' onclick='Callback_HttpGet();'> 
+ 
+</p> -->
+
+</body>
+</html>
+

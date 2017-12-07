@@ -1,0 +1,8 @@
+12/8/2016
+	• Integrate the add excel file button, change the function so the importation of excel happens after the user clicks the add new excel button
+	
+	
+12/07/2016
+	• Hide the export button, integrate save to excel functionality to the send button function
+	• Fixes the issues where multiple saves attempts creates the "DataTable already belongs to another DataSet" error
+	• Add new excel file button with the current date
